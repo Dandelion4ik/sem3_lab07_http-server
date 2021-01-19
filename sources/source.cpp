@@ -169,7 +169,7 @@ int run_server(int argc, char** argv) {
   std::shared_ptr<std::timed_mutex> mutex =
       std::make_shared<std::timed_mutex>();
   std::shared_ptr<Json_storage> storage = std::make_shared<Json_storage>(
-      "/Users/evgenii/CLionProjects/lab-07-http-server/suggestions.json");
+      "C::\\Users/Kavia/CLionProjects/lab-07-http-server/suggestions.json");
   std::shared_ptr<Suggestions_collection> suggestions =
       std::make_shared<Suggestions_collection>();
   try {
