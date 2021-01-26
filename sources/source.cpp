@@ -27,10 +27,10 @@ std::string make_json(const json& data) {
   return ss.str();
 }
 
-template <class Body, class Allocator, class Send>
-void handle_request(http::request<Body, http::basic_fields<Allocator>>&& req,
-                    Send&& send, const std::shared_ptr<std::timed_mutex>& mutex,
-                    const std::shared_ptr<Suggestions_collection>& collection) {
+template <class body_, class allocator_, class send_>
+void handle_request(http::request<body_, http::basic_fields<allocator_>>&& req,
+                    send_&& send, const std::shared_ptr<std::timed_mutex>& mutex,
+                    const std::shared_ptr<suggestion_collect>& collection) {
 
 
   auto const bad_request = [&req](beast::string_view why) {
@@ -85,7 +85,7 @@ void handle_request(http::request<Body, http::basic_fields<Allocator>>&& req,
   }
 
   mutex->lock();
-  auto result = collection->Suggest(input.value());
+  auto result = collection->suggest(input.value());
   mutex->unlock();
   http::string_body::value_type body = make_json(result);
   auto const size = body.size();
@@ -122,16 +122,16 @@ struct send_lambda {
   explicit send_lambda(Stream& stream, bool& close, beast::error_code& ec)
       : stream_(stream), close_(close), ec_(ec) {}
 
-  template <bool isRequest, class Body, class Fields>
-  void operator()(http::message<isRequest, Body, Fields>&& msg) const {
+  template <bool is_request, class body, class fields>
+  void operator()(http::message<is_request, body, fields>&& msg) const {
     close_ = msg.need_eof();
-    http::serializer<isRequest, Body, Fields> sr{msg};
+    http::serializer<is_request, body, fields> sr{msg};
     http::write(stream_, sr, ec_);
   }
 };
 
 void do_session(net::ip::tcp::socket& socket,
-                const std::shared_ptr<suggestions_collect>& collection,
+                const std::shared_ptr<suggestion_collect>& collection,
                 const std::shared_ptr<std::timed_mutex>& mutex) {
   bool close = false;
   beast::error_code ec;
@@ -153,7 +153,7 @@ void do_session(net::ip::tcp::socket& socket,
 
 void suggestion_updater(
     const std::shared_ptr<json_rep>& storage,
-    const std::shared_ptr<suggestions_collect>& suggestions,
+    const std::shared_ptr<suggestion_collect>& suggestions,
     const std::shared_ptr<std::timed_mutex>& mutex) {
   using std::chrono_literals::operator""min;
   for (;;) {
@@ -170,8 +170,8 @@ int run_server(int argc, char** argv) {
       std::make_shared<std::timed_mutex>();
   std::shared_ptr<json_rep> storage = std::make_shared<json_rep>(
       "C::\\Users/Kavia/CLionProjects/lab-07-http-server/suggestions.json");
-  std::shared_ptr<suggestions_collect> suggestions =
-      std::make_shared<suggestions_collect>();
+  std::shared_ptr<suggestion_collect> suggestions =
+      std::make_shared<suggestion_collect>();
   try {
     if (argc != 3) {
       std::cerr << "Usage: suggestion_server <address> <port>\n"
