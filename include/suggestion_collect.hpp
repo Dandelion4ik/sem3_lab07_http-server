@@ -1,7 +1,7 @@
 // Copyright 2020 Kavykin Andrey Kaviandr@yandex.ru
 
-#ifndef INCLUDE_SUGGESTIONS_COLLECTION_HPP_
-#define INCLUDE_SUGGESTIONS_COLLECTION_HPP_
+#ifndef INCLUDE_SUGGESTION_COLLECT_HPP_
+#define INCLUDE_SUGGESTION_COLLECT_HPP_
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -17,4 +17,4 @@ class suggestion_collect {
   json suggestions_;
 };
 
-#endif  // INCLUDE_SUGGESTIONS_COLLECTION_HPP_
+#endif  // INCLUDE_SUGGESTION_COLLECT_HPP_

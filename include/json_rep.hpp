@@ -1,7 +1,7 @@
 // Copyright 2020 Kavykin Andrey Kaviandr@yandex.ru
 
-#ifndef INCLUDE_JSON_STORAGE_HPP_
-#define INCLUDE_JSON_STORAGE_HPP_
+#ifndef INCLUDE_JSON_REP_HPP_
+#define INCLUDE_JSON_REP_HPP_
 
 #include <nlohmann/json.hpp>
 #include <string>
@@ -18,4 +18,4 @@ class json_rep {
   json storage_;
 };
 
-#endif  // INCLUDE_JSON_STORAGE_HPP_
+#endif  // INCLUDE_JSON_REP_HPP_
