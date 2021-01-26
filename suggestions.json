@@ -1,0 +1,32 @@
+[
+  {
+    "id": "hel",
+    "name": "hello world",
+    "cost": 70
+  },
+  {
+    "id": "hel",
+    "name": "hello",
+    "cost": 10
+  },
+  {
+    "id": "hel",
+    "name": "helm",
+    "cost": 200
+  },
+  {
+    "id": "C++",
+    "name": "The best programming language",
+    "cost": 100
+  },
+  {
+    "id": "Python",
+    "name": "Good programming language",
+    "cost": 70
+  },
+  {
+    "id": "C#",
+    "name": "Not bad programming language",
+    "cost": 50
+  }
+]

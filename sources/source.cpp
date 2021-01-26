@@ -116,7 +116,7 @@ void fail(beast::error_code ec, char const* what) {
 template <class Stream>
 struct send_lambda {
   Stream& stream_;
-  [[maybe_unused]] bool& close_;
+  bool& close_;
   beast::error_code& ec_;
 
   explicit send_lambda(Stream& stream, bool& close, beast::error_code& ec)
@@ -169,7 +169,7 @@ int run_server(int argc, char** argv) {
   std::shared_ptr<std::timed_mutex> mutex =
       std::make_shared<std::timed_mutex>();
   std::shared_ptr<json_rep> storage = std::make_shared<json_rep>(
-      "C::\\Users/Kavia/CLionProjects/lab-07-http-server/suggestions.json");
+      "/home/andrey/CLionProjects/sem3_lab07_http-server/suggestions.json");
   std::shared_ptr<suggestion_collect> suggestions =
       std::make_shared<suggestion_collect>();
   try {
